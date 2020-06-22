@@ -7,6 +7,8 @@ body {
   padding-top: 60px;
 }
 
+
+
 section {
   overflow: auto;
 }
@@ -29,11 +31,20 @@ h1, h2, h3, h4, h5, h6 {
   line-height: 1;
 }
 
+#top-main-title {
+  text-align: center;
+  font-weight: bold;
+  font-style: italic;
+}
+
+
 h1 {
   font-size: 3em;
   letter-spacing: -2px;
   margin-bottom: 30px;
   text-align: center;
+  font-weight: normal;
+  font-style: oblique;
 }
 
 h2 {
@@ -48,7 +59,10 @@ h2 {
 p {
   font-size: 1.1em;
   line-height: 1.7em;
+  text-align: center;
 }
+
+
 
 /* ヘッダー */
 
@@ -57,18 +71,42 @@ p {
   margin-right: 10px;
   font-size: 1.7em;
   color: #fff;
-  text-transform: uppercase;
+  text-transform: capitalize;
   letter-spacing: -1px;
   padding-top: 9px;
   font-weight: bold;
+  font-style: oblique;
 }
 
 #logo:hover {
-  color: #fff;
+  color: #808080;
   text-decoration: none;
 }
 
+.navbar-default {
+  background-color: #099fa7;
+  border-color: #e7e7e7;
+}
 
+.header-list{
+  color: #fff !important;
+  font-weight: bold !important;
+}
+
+.header-list:hover{
+  color: #808080 !important;
+  text-decoration: none !important;
+}
+
+li .dropdown-header {
+    background-color: rgba(200,200,200,0.5);
+    font-weight: bold;
+}
+
+.form-control {
+    background-color: #eeeeee;
+    opacity: 1;
+}
 /* デバッグウインドウ */
 
 .debug_dump {
