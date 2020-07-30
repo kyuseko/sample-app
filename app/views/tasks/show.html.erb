@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+
+<% provide(:title, 'タスク詳細ページ') %>
+
+<div class="container">
+      
+<h1>タスク詳細</h1>
+
+<div class="row">
+  <div class="col-md-10 col-md-offset-1">
+    <table class="table table-bordered" id="table-task">
+      
+      <tr>
+      <td>ID</td>
+      <td>名称</td>
+      <td>詳細</td>
+      <td>作成日</td>
+      <tb>更新日</tb>
+    </tr>
+    
+    <div>
+        <a class="btn btn-lg btn-success" href="/users/1/tasks/752/edit">編集</a>
+        <a class="btn btn-lg btn-danger" rel="nofollow" data-method="delete" href="/users/1/tasks/752">削除</a>
+    </div>
+</html>

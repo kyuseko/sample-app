@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<div class="container">
+      
+ <h1>管理者のタスク一覧</h1>
+
+
+  <div class="row">
+    <div class="col-md-10 col-md-offset-1">
+     <%= link_to "タスク新規作成", new_user_task_path(session[:user_id]), class: "btn btn-lg btn-primary pull-right" %>
+      <table class="table table-hover" id="table-tasks">
+        <thead>
+          <tr>
+           <th>名称</th>
+           <th>作成日</th>
+           <th></th>
+          </tr>
+        </thead>
+       <tbody>
+         <div class="main posts-index">
+           <div class="container">
+             <% @tasks.each do |task| %>     
+             <div class="posts-index-item">
+               <tr>
+                  <td><%= task.name %></td>  
+                  <td><%= task.created_at %></td>
+                  <td>
+                    <%= link_to "編集", edit_user_task_path(@user,task), class: "btn btn-success" %> 
+                    <%= link_to "削除", user_task_path(@user,task), method: :delete,  data: { confirm: "削除してよろしいですか？" }, class: "btn btn-danger" %>
+                  </td>
+               </tr>
+             </div>
+             <% end %>
+            </div>
+          </div>
+       </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+</html>
+  

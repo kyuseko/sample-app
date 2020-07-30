@@ -37,6 +37,9 @@ h1, h2, h3, h4, h5, h6 {
   font-style: italic;
 }
 
+.jumbotron{
+  background-color: #fff;
+}
 
 h1 {
   font-size: 3em;
@@ -83,28 +86,77 @@ p {
   text-decoration: none;
 }
 
-.navbar-default {
-  background-color: #099fa7;
-  border-color: #e7e7e7;
+/*　ドロップダウンの中 */
+
+.heder-last{
+  display: block;
+  padding: 3px 20px;
+  clear: both;
+  font-weight: 400;
+  line-height: 1.428571429;
+  color: #333333;
+  white-space: nowrap;
 }
 
-.header-list{
-  color: #fff !important;
+.heder-last:hover {
+  color: #808080;
+  text-decoration: none;
+}
+
+/* ユーザー */
+
+.dropdown-heder {     
+    display: block;
+    padding: 3px 20px;
+    font-size: 12px;
+    line-height: 1.428571429;
+    color: #777777;
+    white-space: nowrap;
+    background: #ddd;
+}
+
+.nav {
+  color: #f5f5f5;
+  font-weight: bold;
+}
+
+/* header-backgraund */
+
+.navbar-default {
+    background-color: rgba(18,123,104,1);
+    font-weight: bold;
+}
+
+.navbar-default:hover{
+  color: #808080;
+  text-decoration: none;
+}
+
+/* 管理者 */
+
+#dropdown-title {
+  color:#f5f5f5;
+}
+
+#dropdown-title:hover {
+  color: #808080;
+  text-decoration: none;
+}
+
+/* headerの文字 */
+
+.heder-list {
+  color: #f5f5f5 !important;
   font-weight: bold !important;
 }
 
-.header-list:hover{
+
+.heder-list:hover {
   color: #808080 !important;
   text-decoration: none !important;
 }
 
-li .dropdown-header {
-    background-color: rgba(200,200,200,0.5);
-    font-weight: bold;
-}
-
 .form-control {
-    background-color: #eeeeee;
     opacity: 1;
 }
 /* デバッグウインドウ */
