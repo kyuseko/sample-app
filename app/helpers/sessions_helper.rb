@@ -5,14 +5,15 @@ module SessionsHelper
     session[:user_id]=user.id # ユーザーのブラウザ内にある一時的cookiesに暗号化済みのuser.idが自動で生成
   end                              # user.idはsession[:user_id]と記述することで元通りの値を取得することが可能
   # ユーザーのログインを行ってcreateアクションを完了してユーザー情報ページへリダイレクトする準備が整いました。
+  # log_inメソッドの機能で、ユーザーIDを一時的セッションの中に安全に記憶
   
   
   # 永続的セッションを記憶します（Userモデルを参照）
   def remember(user)
     user.remember
-    cookies.permanent.signed[:user_id] = user.id
+    cookies.permanent.signed[:user_id] = user.id  # ユーザーidをcookiesに保存
     cookies.permanent[:remember_token] = user.remember_token
-  end
+  end                                             # ログインするユーザーはブラウザで有効な記憶トークンを取得できるよう記録
   
   # 永続的セッションを破棄します
   def forget(user)
@@ -30,12 +31,12 @@ module SessionsHelper
   
   # 一時的セッションにいるユーザーを返します。
   # それ以外の場合はcookiesに対応するユーザーを返します。
-  def current_user  # 現在ログイン中のユーザーを取得 インスタンス変数にしてdbへ問い合わせ一回で済む
+  def current_user  # 現在ログイン中のユーザーを取得 インスタンス変数にしてdbへ問い合わせ一回で済む 
     if (user_id = session[:user_id])
-      @current_user ||= User.find_by(id: user_id)
-    elsif (user_id = cookies.signed[:user_id])
-      user = User.find_by(id: user_id)
-      if user && user.authenticated?(cookies[:remember_token])
+      @current_user ||= User.find_by(id: user_id) # nilの時対応ができないからfind_by ユーザーオブジェクト取得
+    elsif (user_id = cookies.signed[:user_id])   # ユーザーidをcookiesに保存を代入
+      user = User.find_by(id: user_id)           # ユーザーオブジェクトを取得
+      if user && user.authenticated?(cookies[:remember_token])  # cookiesに保存されているremember_tokenがdbにあるremember_digestと一致することを確認
         log_in user
         @current_user = user
       end
@@ -48,7 +49,7 @@ module SessionsHelper
     user == current_user
   end
   
-  
+  # ユーザーがログインしている時とそうではない時でレイアウトを変更してみましょう。
   # このログイン状態を論理値（trueかfalse）で返すヘルパーメソッド（logged_in?）を定義しましょう。
   # 現在ログイン中のユーザーがいればtrue、そうでなければfalseを返します
   def logged_in?
@@ -56,8 +57,8 @@ module SessionsHelper
   end
   
   # 記憶しているURL(またはデフォルトURL)にリダイレクトします。
-  def redirect_back_or(default_url)
-    redirect_to(session[:forwarding_url] || default_url)
+  def redirect_back_or(default_url) # URLを記憶しておく手段として、一時的セッションであるsessionハッシュを使います。
+    redirect_to(session[:forwarding_url] || default_url)  # nilでなければその値を使い、そうでなければ右側のdefaultの値を使います。
     session.delete(:forwarding_url)    # 一時的セッションを破棄
   end
 

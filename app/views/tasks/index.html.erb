@@ -3,7 +3,7 @@
 
 <div class="container">
       
- <h1>管理者のタスク一覧</h1>
+ <h1><%= @user.name %>のタスク一覧</h1>
 
 
   <div class="row">
@@ -20,14 +20,14 @@
        <tbody>
          <div class="main posts-index">
            <div class="container">
-             <% @tasks.each do |task| %>     
+             <% @tasks.each do |task| %>  <!-- ここで一つのタスク取得 -->   
              <div class="posts-index-item">
                <tr>
-                  <td><%= task.name %></td>  
-                  <td><%= task.created_at %></td>
+                  <td><%= link_to task.name, user_task_path(@user, task), class: "task-name" %></td> <!-- idの値が重要 --> 
+                  <td><%= l(task.created_at, format: :long) %></td> <!-- lメソット formatオプションを付ける -->
                   <td>
-                    <%= link_to "編集", edit_user_task_path(@user,task), class: "btn btn-success" %> 
-                    <%= link_to "削除", user_task_path(@user,task), method: :delete,  data: { confirm: "削除してよろしいですか？" }, class: "btn btn-danger" %>
+                    <%= link_to "編集", edit_user_task_path(@user, task), class: "btn btn-success" %> 
+                    <%= link_to "削除", user_task_path(@user, task), method: :delete,  data: { confirm: "削除してよろしいですか？" }, class: "btn btn-danger" %>
                   </td>
                </tr>
              </div>

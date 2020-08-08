@@ -8,4 +8,15 @@ module ApplicationHelper
       page_name + " | " + base_title  # 文字列を連結して返す
     end
   end
+  
+  require "uri"
+ 
+  def text_url_to_link(text)
+ 
+    URI.extract(text, ["http", "https"]).uniq.each do |url|
+      text.gsub!(url, "#{url}")
+    end
+    text
+  end
+  
 end

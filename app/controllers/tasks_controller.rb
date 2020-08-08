@@ -1,6 +1,9 @@
 class TasksController < ApplicationController
   
    before_action :set_user  # paramsハッシュからユーザーを取得します。ログインしたユーザー
+   before_action :set_task, only: %i(show edit update destroy)  # userのidとtaskのidが一致しているか
+   before_action :logged_in_user       # ログインしていないユーザー アクションを指定
+   before_action :correct_user                                  # 現ログインユーザーであるか 正しいユーザーか？
    
    
   def index
@@ -10,7 +13,7 @@ class TasksController < ApplicationController
   
   def new
     # @user=User.find(params[:user_id])
-    @tasks=@user.tasks.new
+    @task= @user.tasks.new
   end 
   
   def create
@@ -25,24 +28,35 @@ class TasksController < ApplicationController
   end
   
   def show
-    @tasks = Task.find(params[:id])
+    # @user=User.find(params[:user_id])
+    @task = @user.tasks.find(params[:id])
   end 
   
   def edit
-    @tasks = Task.find(params[:id])
+    @tasks = @user.tasks.find(params[:id])
   end 
   
   def update
-    @tasks = Task.find(params[:id])
-    redirect_to posts_index_url
+    if @task.update_attributes(task_params)
+      flash[:success] = "タスクを更新しました。"
+      redirect_to user_task_url(@user, @task)
+    else
+      render :edit
+    end
   end
   
+  
+  def destroy
+    @tasks = @user.tasks.find(params[:id])
+    @tasks.destroy
+    redirect_to user_tasks_url
+  end
   
   
  private  # 外部からは使用できないようにします
      # Strong Parameters
     def task_params    # requireとは必要とするで、permitは許可をするという意味
-      params.permit(:name, :description, :user_id)  # require(:task)がダブルのでいらない
+      params.require(:task).permit(:name, :description)  # require(:task)がダブルのでいらない
     end 
  
     # beforeフィルター
@@ -50,6 +64,14 @@ class TasksController < ApplicationController
       # paramsハッシュからユーザーを取得します。
     def set_user
       @user=User.find(params[:user_id])
+    end
+    
+    
+    def set_task  # 権限があるか？  userのidとtaskのidが一致しているか？
+     unless @task = @user.tasks.find_by(id: params[:id])
+        flash[:danger] = "権限がありません。"
+        redirect_to user_tasks_url @user
+     end
     end
     
     

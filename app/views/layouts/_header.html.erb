@@ -14,27 +14,33 @@
   <body>
   <header class="navbar navbar-fixed-top navbar-default" id="header">
   <div class="container">
-    <a id="logo" href="/">Task App</a>
+    <%= link_to "Task App", root_path, id: "logo" %>
     <nav>
       <ul class="nav navbar-nav navbar-right">
           <li><%= link_to "トップ", root_path, class: "heder-list" %></li>
-          <li><%= link_to "利用者一覧", users_path, class: "heder-list" %></li>
-          <li><%= link_to "タスク作成", new_user_task_path(current_user), class: "heder-list" %></li>  <!-- <link_to "リンク名", アクション名_コントローラ名_path(渡したい変数名) %>-->
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle header-list" data-toggle="dropdown" id="dropdown-title">
-              管理者 <b class="caret"></b>
-            </a>
-            <ul class="dropdown-menu">
-              <li class="dropdown-header">ユーザー</li>
-              <li><%= link_to "プロフィール", current_user, class: "heder-last" %></li> <!--user_path(current_user)-->
-              <li><%= link_to "設定", '#', class: "heder-last" %></li>
-              <li class="dropdown-header">タスク</li>
-              <li><%= link_to "タスク一覧", user_tasks_path(current_user), class: "heder-last" %></li>
+          <% if logged_in? %>
+            <% if current_user.admin? %>
+              <li><%= link_to "利用者一覧", users_path, class: "heder-list" %></li>
+            <% end %>
+           <li><%= link_to "タスク作成", new_user_task_path(current_user), class: "heder-list" %></li>
+           <li class="dropdown">
+             <a href="#" class="dropdown-toggle header-list" data-toggle="dropdown" id="dropdown-title">
+               <%= current_user.name %> <b class="caret"></b>
+             </a>
+               <ul class="dropdown-menu">
+                <li class="dropdown-header">ユーザー</li>
+                <li><%= link_to "プロフィール", current_user, class: "heder-last" %></li> <!--user_path(current_user)-->
+                <li><%= link_to "設定", edit_user_path(current_user), class: "heder-last" %></li> <!-- @userで指定すると、トップページなどのインスタンス変数を定義していないページでエラーとなります -->
+                <li class="dropdown-header">タスク</li>
+                <li><%= link_to "タスク一覧", user_tasks_path(current_user), class: "heder-last" %></li>
               
-              <li class="divider"></li>
-              <li><%= link_to "ログアウト", logout_path, method: :delete, class: "heder-last"%></li>
-            </ul>
-          </li>
+                <li class="divider"></li>
+                <li><%= link_to "ログアウト", logout_path, method: :delete, class: "heder-last"%></li>
+               </ul>
+            </li>
+          <% else %>
+            <li><%= link_to "ログイン", login_path, class: "header-list" %></li>
+          <% end %>
       </ul>
     </nav>
    </div>

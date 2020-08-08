@@ -1,0 +1,9 @@
+
+<!-- users-index -->
+<li>
+  <%= link_to user.name, user %>
+  <% if current_user.admin? && !current_user?(user) %>  <!--  管理者のみ削除リンクが見えるように -->
+    | <%= link_to "削除", user, method: :delete,
+                         data: { confirm: "削除してよろしいですか？" } %>
+  <% end %>
+</li>
